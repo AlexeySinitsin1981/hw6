@@ -33,11 +33,13 @@ public class Server {
                     }
                 }
             }
+        }else{
+            System.out.println("HTTP/1.1 404 Not Found");
+            bw.write(line);
+            bw.flush();
         }
-        System.out.println("The client just sent me this line: " + sb);
-        System.out.println("I'm sending it back...");
-        //bw.write(line);
-        //bw.flush();
+
     }
+
 }
 
