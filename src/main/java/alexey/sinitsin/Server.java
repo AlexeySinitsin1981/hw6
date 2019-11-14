@@ -26,20 +26,39 @@ public class Server {
         }
         if (sb.toString().contains("GET")) {
             File file = new File("C:\\Users\\User\\IdeaProjects\\hw6");
+            String body=new String();
+
             if (file.isDirectory()) {
                 for (File item : file.listFiles()) {
                     if (item.isDirectory()) {
                         System.out.println(item.getName());
+                        body = body+" <li>"+item.getName()+" </li>\n";
+
                     }
                 }
             }
-        }else{
-            System.out.println("HTTP/1.1 404 Not Found");
-            bw.write(line);
+            body="<html><body><h1>Hello " +"<ul>\n"+body+"</ul></h1></body></html>";
+            String header = "HTTP/1.1 200 OK"+"\r\n" +
+                    "Server: YarServer/2009-09-09\r\n" +
+                    "Content-Type: text/html;charset=utf-8\r\n" +
+                    "Content-Length: " + body.length() + "\r\n" +
+                    "Connection: close\r\n\r\n";
+            bw.write(header+body);
             bw.flush();
+        }else{
+            String header = "HTTP/1.1 404 Not Found" + "\r\n" +
+                    "Server: YarServer/2009-09-09\r\n" +
+                    "Content-Type: text/html;charset=utf-8\r\n" +
+                    "Content-Length: " + 0 + "\r\n" +
+                    "Connection: close\r\n\r\n";
+            bw.write(header);
+            bw.flush();
+
         }
 
     }
+
+
 
 }
 
